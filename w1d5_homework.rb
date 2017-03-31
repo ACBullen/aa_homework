@@ -16,3 +16,7 @@ class Stack
     @stack_storage
   end
 end
+
+class Queue
+  
+end
