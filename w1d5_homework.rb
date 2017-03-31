@@ -35,3 +35,21 @@ class Queue
     queue_storage
   end
 end
+
+class Map
+  def initialize
+    @map_storage = []
+  end
+
+  def assign(key, val)
+    
+
+  end
+
+  def lookup(key)
+  end
+
+  def remove(key)
+
+  end
+end
