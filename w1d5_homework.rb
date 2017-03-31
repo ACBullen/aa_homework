@@ -37,16 +37,31 @@ class Queue
 end
 
 class Map
+  attr_accessor :map_storage
   def initialize
     @map_storage = []
   end
 
   def assign(key, val)
-    
+    pair = [key, val]
 
+    if map_storage.empty?
+      map_storage << pair
+      return map_storage
+    else
+      map_storage.each do |set_pair|
+        if set_pair[0] == key
+          set_pair[1] = val
+          return map_storage
+        end
+      end
+    end
+
+    map_storage << pair
   end
 
   def lookup(key)
+
   end
 
   def remove(key)
