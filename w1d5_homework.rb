@@ -65,6 +65,8 @@ class Map
   end
 
   def remove(key)
-
+    map_storage.each_with_index do |kv_pair, idx|
+      map_storage.delete_at(idx) if kv_pair[0] == key
+    end
   end
 end
