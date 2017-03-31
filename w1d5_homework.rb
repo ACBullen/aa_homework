@@ -5,18 +5,33 @@ class Stack
   end
 
   def add(el)
-    @stack_storage.push(el)
+    stack_storage.push(el)
   end
 
   def remove
-    @stack_storage.pop
+    stack_storage.pop
   end
 
   def show
-    @stack_storage
+    stack_storage
   end
 end
 
 class Queue
-  
+  attr_accessor :queue_storage
+  def initialize
+    @queue_storage = []
+  end
+
+  def enqueue(el)
+    queue_storage.push(el)
+  end
+
+  def dequeue
+    queue_storage.shift
+  end
+
+  def show
+    queue_storage
+  end
 end
