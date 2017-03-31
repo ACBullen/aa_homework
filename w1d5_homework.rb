@@ -61,7 +61,7 @@ class Map
   end
 
   def lookup(key)
-
+    map_storage.each { |kv_pair| return kv_pair[1] if kv_pair[0] == key }
   end
 
   def remove(key)
