@@ -67,6 +67,7 @@ if __FILE__ == $PROGRAM_NAME
   puts "Please input a name for player 1:"
   player1 = gets.chomp
   puts "Please input a name for player 2:"
-  a = Game.new(player1, player2)
+  player2 = gets.chomp
+  a = Mancala.new(player1, player2)
   a.play
 end
