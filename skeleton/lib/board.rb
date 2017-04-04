@@ -29,17 +29,18 @@ class Board
   def make_move(start_pos, current_player_name)
   #  debugger
     idx = start_pos
-    until cups[start_pos].length == 0
+    stones = cups[start_pos]
+    @cups[start_pos] = []
+    until stones.empty?
       idx += 1
       idx = 0 if idx > 13
       if idx == 6
-        idx = 7 unless @player1 == current_player_name
+        @cups[6] << stones.pop if current_player_name == @player1
+      elsif idx == 13
+        @cups[13] << stones.pop if current_player_name == @player2
+      else
+        cups[idx] << stones.pop
       end
-      if idx == 13
-        idx = 0 unless @player2 == current_player_name
-      end
-      cups[start_pos] = cups[start_pos][0...-1]
-      cups[idx] << :stone
     end
 
     render
