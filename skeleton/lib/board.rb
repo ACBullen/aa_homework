@@ -5,7 +5,6 @@ class Board
   def initialize(name1, name2)
     @player1 = name1
     @player2 = name2
-    @current_player = @player1
     @cups =  Array.new(14){ [] }
     place_stones
   end
@@ -23,7 +22,8 @@ class Board
   end
 
   def valid_move?(start_pos)
-    raise("Invalid starting cup") if start_pos < 0 || start_pos > 12 || start_pos == 6
+    raise("Invalid starting cup") if start_pos < 1 || start_pos > 12
+    raise "Invalid starting cup" if @cup[start_pos].empty?
   end
 
   def make_move(start_pos, current_player_name)
@@ -31,16 +31,17 @@ class Board
     idx = start_pos
     until cups[start_pos].length == 0
       idx += 1
-      idx == 0 if idx > 13
+      idx = 0 if idx > 13
       if idx == 6
         idx = 7 unless @player1 == current_player_name
       end
       if idx == 13
         idx = 0 unless @player2 == current_player_name
       end
-      cups[start_pos]= cups[start_pos][0...-1]
+      cups[start_pos] = cups[start_pos][0...-1]
       cups[idx] << :stone
     end
+
     render
     next_turn(idx)
   end
@@ -49,10 +50,10 @@ class Board
     # helper method to determine what #make_move returns
     if ending_cup_idx == 6 || ending_cup_idx == 13
       :prompt
-    elsif cups[ending_cup_idx] == :stone
+    elsif cups[ending_cup_idx].count == 1
       :switch
     else
-    ending_cup_idx
+      ending_cup_idx
     end
   end
 
@@ -79,11 +80,11 @@ class Board
   def winner
     case cups[6] <=> cups[13]
     when -1
-
+      @player2
     when 0
       :draw
     when 1
-
+      @player1
     end
   end
 end
