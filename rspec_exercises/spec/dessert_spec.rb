@@ -6,8 +6,8 @@ Instructions: implement all of the pending specs (the `it` statements without bl
 =end
 
 describe Dessert do
-  let(:chef) { double("chef") }
-  subject(:brownie) { Desert.new("brownie", 50, :chef) }
+  let(:chef) { double("chef", name: 'Billie') }
+  let(:brownie) { Dessert.new("brownie", 50, chef) }
 
   describe "#initialize" do
     it "sets a type" do
@@ -24,29 +24,49 @@ describe Dessert do
     end
 
     it "raises an argument error when given a non-integer quantity" do
-      expect()
+      expect { Dessert.new("brownie", "tons", :chef)}.to raise_error(ArgumentError)
     end
   end
 
   describe "#add_ingredient" do
-    it "adds an ingredient to the ingredients array"
+    it "adds an ingredient to the ingredients array"do
+      expect(brownie.add_ingredient('eggs')).to eq(['eggs'])
+    end
   end
 
   describe "#mix!" do
-    it "shuffles the ingredient array"
+    it "shuffles the ingredient array" do
+      ingred = ['flour', 'eggs', 'baking powder', 'milk']
+      ingred.each do |item|
+        brownie.add_ingredient(item)
+      end
+      brownie.mix!
+      expect(brownie.ingredients).not_to eq (ingred)
+    end
+
   end
 
   describe "#eat" do
-    it "subtracts an amount from the quantity"
+    it "subtracts an amount from the quantity" do
+      expect(brownie.eat(5)).to eq(45)
+    end
 
-    it "raises an error if the amount is greater than the quantity"
+    it "raises an error if the amount is greater than the quantity" do
+      expect { brownie.eat(500) }.to raise_error('not enough left!')
+    end
   end
 
   describe "#serve" do
-    it "contains the titleized version of the chef's name"
+    it "contains the titleized version of the chef's name" do
+      allow(chef).to receive(:titleize).and_return("Chef Billie the Great Baker")
+      brownie.serve
+    end
   end
 
   describe "#make_more" do
-    it "calls bake on the dessert's chef with the dessert passed in"
+    it "calls bake on the dessert's chef with the dessert passed in"do
+      expect(chef).to receive(:bake).with(brownie)
+      brownie.make_more
+    end
   end
 end
