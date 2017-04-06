@@ -12,3 +12,19 @@ def sluggish_octopus_search(array)
 
   longest
 end
+
+def dominant_octopus_search(array)
+  sorted = false
+  until sorted
+    sorted = true
+    array.each_index do |i|
+      next if i + 1 >= array.length
+      j = i + 1
+      if array[j].length < array[i].length
+        sorted = false
+        array[j], array[i] = array[i], array[j]
+      end
+    end
+  end
+  array.last
+end
