@@ -89,4 +89,15 @@ class Playwright
     @birth_year = options['birth_year']
   end
 
+  def self.find_by_name(name)
+    PlayDBConnection.instance.execute(<<-SQL, name)
+      SELECT
+        *
+      FROM
+        playwrights
+      WHERE
+        name = ?
+    SQL
+  end
+
 end
